@@ -29,13 +29,16 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body
-  //! check if email or password filled
-  if (!email || !password) {
-    res.status(400).json({ error: "please provide email or password" })
-  }
 
   try {
     const user = await User.findOne({ email })
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch || !user || !email || !password) {
+      res.status(404).json({ error: "Invalid credentials" })
+    }
+
+    res.status(200).json({ user, token: "21321" })
   } catch (error) {}
 }
 
