@@ -1,25 +1,34 @@
 const mongoose = require("mongoose")
-const validator = require("mongoose-validator")
 
-const UserSchema = mongoose.Schema({
-  email: {
-    type: String,
-    lowercase: true,
-    trim: true,
-    unique: true,
-    required: true,
+const userSchema = mongoose.Schema(
+  {
+    email: {
+      type: String,
+      lowercase: true,
+      trim: true,
+      unique: true,
+      required: [true, "Please provide an email."],
+    },
+    password: {
+      type: String,
+      minlength: 6,
+      trim: true,
+      required: [true, "Please provide a password."],
+      //select: false,
+    },
+    role: {
+      type: Number,
+      default: 0,
+    },
+    avatar: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dgq8gsxqb/image/upload/v1640962936/avatar/shan_ccvpd1.png",
+    },
   },
-  password: {
-    type: String,
-    minlength: 6,
-    trim: true,
-    required: [true, "please provide a password"],
-    //select: false,
-  },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-})
+  { timestamps: true }
+)
 
-const User = mongoose.model("User", UserSchema)
+const User = mongoose.model("User", userSchema)
 
 module.exports = User

@@ -1,13 +1,16 @@
 const mongoose = require("mongoose")
 
-const connectDB = async () => {
-  await mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    // userCreateIndex: true,
-    useUnifiedTopology: true,
-    // useFindAndModify: true,
-  })
-  console.log("MONGODB CONNECTED !")
-}
+const connectDB = () =>
+  mongoose.connect(
+    "mongodb+srv://admin:KwvAipAF573ixVHf@cluster0.1ibyb.mongodb.net/authtentication?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+    (err) => {
+      if (err) throw err
+      console.log("MONGODB CONNECTED !")
+    }
+  )
 
 module.exports = connectDB
